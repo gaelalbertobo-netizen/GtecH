@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GtecH — Más que tecnología, soluciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0B0F;
+    --bg-alt: #0F0F15;
+    --card: #16161D;
+    --card-border: #24242E;
+    --blue: #3E8EDE;
+    --pink: #F45BAE;
+    --text: #F2F2F5;
+    --text-dim: #A0A0AC;
+  }
+
+  *{margin:0; padding:0; box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+  }
+
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* Circuito de fondo (firma visual) */
+  .circuit-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    opacity:0.35;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .circuit-bg circle{ animation:none !important; }
+  }
+
+  /* NAV */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(11,11,15,0.75);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--card-border);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 24px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .logo-mark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:1.3rem;
+  }
+  .logo-icon{
+    width:34px; height:34px;
+    border-radius:8px;
+    background:linear-gradient(135deg, var(--blue), var(--pink));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1rem;
+    color:#0B0B0F;
+    font-weight:700;
+  }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-size:0.95rem;
+    font-weight:500;
+  }
+  .nav-links a{
+    color:var(--text-dim);
+    transition:color 0.2s;
+    position:relative;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--text);}
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    bottom:-6px; left:0;
+    width:0; height:2px;
+    background:linear-gradient(90deg, var(--blue), var(--pink));
+    transition:width 0.25s;
+  }
+  .nav-links a:hover::after{width:100%;}
+
+  .nav-cta{
+    background:linear-gradient(135deg, var(--blue), var(--pink));
+    color:#0B0B0F;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:600;
+    font-size:0.9rem;
+    transition:transform 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(244,91,174,0.3);}
+
+  .nav-toggle{display:none;}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding:120px 24px 80px;
+  }
+
+  .hero-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px;
+    border:1px solid var(--card-border);
+    border-radius:999px;
+    font-size:0.85rem;
+    color:var(--text-dim);
+    margin-bottom:28px;
+    background:rgba(255,255,255,0.02);
+  }
+  .hero-eyebrow .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--pink);
+    box-shadow:0 0 8px var(--pink);
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 5rem);
+    line-height:1.05;
+    margin-bottom:20px;
+  }
+  .hero h1 span{
+    background:linear-gradient(135deg, var(--blue), var(--pink));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero p.tagline{
+    font-size:clamp(1.05rem, 2vw, 1.35rem);
+    color:var(--text-dim);
+    max-width:560px;
+    margin-bottom:40px;
+  }
+
+  .service-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:center;
+    margin-bottom:48px;
+    max-width:700px;
+  }
+  .chip{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 18px;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:999px;
+    font-size:0.9rem;
+  }
+
+  .hero-actions{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .btn-primary{
+    background:linear-gradient(135deg, var(--blue), var(--pink));
+    color:#0B0B0F;
+    padding:16px 32px;
+    border-radius:10px;
+    font-weight:600;
+    font-size:1rem;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(62,142,222,0.25);}
+
+  .btn-ghost{
+    padding:16px 32px;
+    border-radius:10px;
+    font-weight:600;
+    font-size:1rem;
+    border:1px solid var(--card-border);
+    background:rgba(255,255,255,0.02);
+    transition:border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover{border-color:var(--blue); background:rgba(62,142,222,0.08);}
+
+  .hero-visual-note{
+    position:absolute;
+    bottom:32px;
+    font-size:0.75rem;
+    color:var(--text-dim);
+    opacity:0.6;
+  }
+
+  /* Secciones generales */
+  section{
+    position:relative;
+    z-index:1;
+    padding:120px 0;
+  }
+  .section-header{
+    text-align:center;
+    max-width:600px;
+    margin:0 auto 64px;
+  }
+  .section-eyebrow{
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--pink);
+    font-weight:600;
+    margin-bottom:12px;
+    display:block;
+  }
+  .section-header h2{
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    margin-bottom:16px;
+  }
+  .section-header p{color:var(--text-dim); font-size:1.05rem;}
+
+  /* SERVICIOS */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:24px;
+  }
+  .service-card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:32px;
+    transition:transform 0.25s, border-color 0.25s;
+    position:relative;
+    overflow:hidden;
+  }
+  .service-card::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:3px;
+    background:linear-gradient(90deg, var(--blue), var(--pink));
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.3s;
+  }
+  .service-card:hover{transform:translateY(-6px); border-color:var(--card-border);}
+  .service-card:hover::before{transform:scaleX(1);}
+
+  .service-icon{
+    font-size:2rem;
+    margin-bottom:20px;
+    display:inline-block;
+  }
+  .service-card h3{font-size:1.25rem; margin-bottom:16px;}
+  .service-card ul{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:20px;
+  }
+  .service-card ul li{
+    font-size:0.82rem;
+    color:var(--text-dim);
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--card-border);
+    padding:5px 12px;
+    border-radius:999px;
+  }
+  .service-link{
+    font-size:0.9rem;
+    font-weight:600;
+    color:var(--blue);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    transition:gap 0.2s;
+  }
+  .service-link:hover{gap:10px; color:var(--pink);}
+
+  /* PORTAFOLIO */
+  .portfolio-tabs{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:48px;
+  }
+  .tab-btn{
+    padding:10px 22px;
+    border-radius:999px;
+    border:1px solid var(--card-border);
+    background:transparent;
+    color:var(--text-dim);
+    font-size:0.9rem;
+    font-weight:500;
+    cursor:pointer;
+    transition:all 0.2s;
+    font-family:'Inter', sans-serif;
+  }
+  .tab-btn.active, .tab-btn:hover{
+    color:#0B0B0F;
+    background:linear-gradient(135deg, var(--blue), var(--pink));
+    border-color:transparent;
+  }
+
+  .portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+  }
+  .portfolio-item{
+    aspect-ratio:4/3;
+    border-radius:14px;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:var(--text-dim);
+    font-size:0.85rem;
+    text-align:center;
+    padding:20px;
+    transition:border-color 0.2s;
+  }
+  .portfolio-item:hover{border-color:var(--pink);}
+  .portfolio-item .ph-icon{font-size:2rem;}
+
+  /* SOBRE MÍ */
+  .about{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:64px;
+    align-items:center;
+  }
+  .about-photo{
+    aspect-ratio:1/1;
+    border-radius:20px;
+    background:
+      linear-gradient(135deg, rgba(62,142,222,0.15), rgba(244,91,174,0.15)),
+      var(--card);
+    border:1px solid var(--card-border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:12px;
+    color:var(--text-dim);
+    font-size:0.9rem;
+    text-align:center;
+    padding:24px;
+  }
+  .about-photo .ph-icon{font-size:2.5rem;}
+  .about-text .section-eyebrow{text-align:left;}
+  .about-text h2{font-size:clamp(1.8rem,3.5vw,2.4rem); margin-bottom:20px;}
+  .about-text p{color:var(--text-dim); margin-bottom:20px; font-size:1.05rem;}
+  .about-stats{
+    display:flex;
+    gap:32px;
+    margin-top:32px;
+    flex-wrap:wrap;
+  }
+  .about-stats div strong{
+    display:block;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.8rem;
+    background:linear-gradient(135deg, var(--blue), var(--pink));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .about-stats div span{font-size:0.85rem; color:var(--text-dim);}
+
+  /* CONTACTO */
+  .contact-box{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:24px;
+    padding:64px 48px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+  }
+  .contact-info h2{font-size:2rem; margin-bottom:16px;}
+  .contact-info p{color:var(--text-dim); margin-bottom:32px;}
+  .contact-list{display:flex; flex-direction:column; gap:20px;}
+  .contact-list li{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:0.98rem;
+  }
+  .contact-list .ico{
+    width:40px; height:40px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--card-border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.1rem;
+    flex-shrink:0;
+  }
+  .contact-list .label{display:block; font-size:0.78rem; color:var(--text-dim);}
+
+  .contact-cta{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:20px;
+  }
+  .contact-cta p{color:var(--text-dim); font-size:0.95rem;}
+  .contact-cta .btn-primary{width:100%; text-align:center; font-size:1.05rem;}
+
+  /* TECNOLOGÍAS */
+  .tech-strip{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .tech-pill{
+    padding:10px 20px;
+    border-radius:999px;
+    border:1px solid var(--card-border);
+    font-size:0.85rem;
+    color:var(--text-dim);
+    background:rgba(255,255,255,0.02);
+  }
+
+  footer{
+    padding:40px 24px;
+    text-align:center;
+    color:var(--text-dim);
+    font-size:0.85rem;
+    border-top:1px solid var(--card-border);
+  }
+
+  /* Reveal on scroll */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible{opacity:1; transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+  }
+
+  /* Responsive */
+  @media (max-width: 900px){
+    .about{grid-template-columns:1fr;}
+    .contact-box{grid-template-columns:1fr; padding:40px 28px;}
+  }
+  @media (max-width: 720px){
+    .nav-links{
+      position:fixed;
+      top:66px; left:0; right:0;
+      background:var(--bg-alt);
+      flex-direction:column;
+      padding:24px;
+      gap:20px;
+      border-bottom:1px solid var(--card-border);
+      transform:translateY(-150%);
+      transition:transform 0.3s;
+    }
+    .nav-links.open{transform:translateY(0);}
+    .nav-toggle{
+      display:block;
+      background:none;
+      border:1px solid var(--card-border);
+      color:var(--text);
+      width:40px; height:40px;
+      border-radius:8px;
+      font-size:1.1rem;
+      cursor:pointer;
+    }
+    .nav-cta{display:none;}
+  }
+
+  /* Focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+</style>
+</head>
+<body>
+
+<svg class="circuit-bg" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3E8EDE"/>
+      <stop offset="100%" stop-color="#F45BAE"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#lineGrad)" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M50,120 H320 V300 H600 V80 H900 V400"/>
+    <path d="M100,500 H400 V650 H750 V500 H1100"/>
+    <path d="M0,850 H250 V1000 H550 V850 H850 V1050"/>
+    <path d="M200,1200 H500 V1350 H900"/>
+  </g>
+  <g fill="#3E8EDE">
+    <circle cx="320" cy="120" r="4"><animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="600" cy="300" r="4"><animate attributeName="opacity" values="1;0.3;1" dur="4s" repeatCount="indefinite"/></circle>
+    <circle cx="400" cy="650" r="4"><animate attributeName="opacity" values="0.3;1;0.3" dur="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="550" cy="1000" r="4"><animate attributeName="opacity" values="1;0.4;1" dur="2.8s" repeatCount="indefinite"/></circle>
+  </g>
+  <g fill="#F45BAE">
+    <circle cx="900" cy="80" r="4"><animate attributeName="opacity" values="0.4;1;0.4" dur="3.2s" repeatCount="indefinite"/></circle>
+    <circle cx="750" cy="500" r="4"><animate attributeName="opacity" values="1;0.3;1" dur="3.8s" repeatCount="indefinite"/></circle>
+    <circle cx="850" cy="1050" r="4"><animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="500" cy="1350" r="4"><animate attributeName="opacity" values="1;0.4;1" dur="4.2s" repeatCount="indefinite"/></circle>
+  </g>
+</svg>
+
+<header>
+  <nav>
+    <div class="logo-mark">
+      <div class="logo-icon">G</div>
+      GtecH
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#portafolio">Portafolio</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#contacto" class="nav-cta">Solicitar servicio</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-eyebrow"><span class="dot"></span> Soporte técnico y soluciones digitales</div>
+  <h1>Más que tecnología,<br><span>soluciones.</span></h1>
+  <p class="tagline">Reparación, desarrollo y diseño para que tu equipo y tu negocio nunca se detengan.</p>
+
+  <div class="service-chips">
+    <div class="chip">💻 Reparación de computadoras</div>
+    <div class="chip">🌐 Desarrollo Web</div>
+    <div class="chip">🎨 Diseño Gráfico</div>
+    <div class="chip">🧊 Diseño 3D</div>
+  </div>
+
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary">Solicitar servicio</a>
+    <a href="#portafolio" class="btn-ghost">Ver trabajos</a>
+  </div>
+
+  <div class="hero-visual-note">📷 Reemplaza el fondo del hero con una foto de tu escritorio de trabajo</div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Lo que hago</span>
+      <h2>Servicios</h2>
+      <p>Cuatro áreas, un mismo estándar: claro, profesional y sin vueltas.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-icon">💻</span>
+        <h3>Soporte Técnico</h3>
+        <ul>
+          <li>Diagnóstico</li>
+          <li>Mantenimiento</li>
+          <li>Windows</li>
+          <li>Hardware</li>
+        </ul>
+        <a href="#contacto" class="service-link">Saber más →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="service-icon">🌐</span>
+        <h3>Desarrollo Web</h3>
+        <ul>
+          <li>Sitios a medida</li>
+          <li>Responsive</li>
+          <li>SEO básico</li>
+          <li>Mantenimiento</li>
+        </ul>
+        <a href="#contacto" class="service-link">Saber más →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="service-icon">🎨</span>
+        <h3>Diseño Gráfico</h3>
+        <ul>
+          <li>Logotipos</li>
+          <li>Identidad visual</li>
+          <li>Material impreso</li>
+          <li>Redes sociales</li>
+        </ul>
+        <a href="#contacto" class="service-link">Saber más →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="service-icon">🧊</span>
+        <h3>Diseño 3D</h3>
+        <ul>
+          <li>Modelado</li>
+          <li>Renders</li>
+          <li>Prototipos</li>
+          <li>Impresión 3D</li>
+        </ul>
+        <a href="#contacto" class="service-link">Saber más →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAFOLIO -->
+<section id="portafolio" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Trabajos reales</span>
+      <h2>Portafolio</h2>
+      <p>Nada vende más que mostrar lo que ya se hizo.</p>
+    </div>
+
+    <div class="portfolio-tabs reveal">
+      <button class="tab-btn active" data-filter="all">Todos</button>
+      <button class="tab-btn" data-filter="pc">🖥 Computadoras</button>
+      <button class="tab-btn" data-filter="web">🌐 Páginas Web</button>
+      <button class="tab-btn" data-filter="logo">🎨 Logos</button>
+      <button class="tab-btn" data-filter="3d">🧊 Diseño 3D</button>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+      <div class="portfolio-item reveal" data-cat="pc"><span class="ph-icon">🖥</span>Reparación de PC — agrega foto</div>
+      <div class="portfolio-item reveal" data-cat="web"><span class="ph-icon">🌐</span>Sitio web — agrega captura</div>
+      <div class="portfolio-item reveal" data-cat="logo"><span class="ph-icon">🎨</span>Logo — agrega imagen</div>
+      <div class="portfolio-item reveal" data-cat="3d"><span class="ph-icon">🧊</span>Render 3D — agrega imagen</div>
+      <div class="portfolio-item reveal" data-cat="pc"><span class="ph-icon">🖥</span>Mantenimiento — agrega foto</div>
+      <div class="portfolio-item reveal" data-cat="web"><span class="ph-icon">🌐</span>Sitio web — agrega captura</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="sobre-mi">
+  <div class="container about">
+    <div class="about-photo reveal">
+      <span class="ph-icon">🧑‍💻</span>
+      Foto tuya trabajando o de tu estación
+    </div>
+    <div class="about-text reveal">
+      <span class="section-eyebrow">Quién está detrás</span>
+      <h2>Sobre mí</h2>
+      <p>Soy técnico en TIC egresado de bachillerato y me especializo en soporte técnico para computadoras de escritorio, desarrollo web, diseño gráfico y diseño 3D.</p>
+      <p>Mi objetivo es ofrecer soluciones tecnológicas claras, profesionales y accesibles para personas y negocios.</p>
+      <div class="about-stats">
+        <div><strong>4</strong><span>Áreas de servicio</span></div>
+        <div><strong>100%</strong><span>Diagnóstico honesto</span></div>
+        <div><strong>Temoris</strong><span>Y alrededores</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="contact-box reveal">
+      <div class="contact-info">
+        <h2>Contacto</h2>
+        <p>¿Tienes un equipo fallando o un proyecto en mente? Escríbeme y lo revisamos.</p>
+        <ul class="contact-list">
+          <li>
+            <span class="ico">💬</span>
+            <span><span class="label">WhatsApp</span>+52 XXX XXX XXXX</span>
+          </li>
+          <li>
+            <span class="ico">📘</span>
+            <span><span class="label">Facebook</span>/GtecH</span>
+          </li>
+          <li>
+            <span class="ico">✉️</span>
+            <span><span class="label">Correo</span>contacto@gtech.com</span>
+          </li>
+          <li>
+            <span class="ico">🕒</span>
+            <span><span class="label">Horario</span>Lun–Sáb, 9:00–18:00</span>
+          </li>
+        </ul>
+      </div>
+      <div class="contact-cta">
+        <p>Diagnóstico inicial sin compromiso. Cuéntame qué pasa y te digo cómo lo resolvemos.</p>
+        <a href="#" class="btn-primary">Solicitar diagnóstico</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECNOLOGÍAS -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Cómo está hecho</span>
+      <h2>Tecnologías</h2>
+    </div>
+    <div class="tech-strip reveal">
+      <div class="tech-pill">HTML5</div>
+      <div class="tech-pill">CSS3</div>
+      <div class="tech-pill">JavaScript</div>
+      <div class="tech-pill">Git</div>
+      <div class="tech-pill">GitHub</div>
+      <div class="tech-pill">GitHub Pages</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 GtecH — Más que tecnología, soluciones.
+</footer>
+
+<script>
+  // Menú móvil
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Filtro de portafolio
+  const tabs = document.querySelectorAll('.tab-btn');
+  const items = document.querySelectorAll('.portfolio-item');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      items.forEach(item => {
+        if (filter === 'all' || item.dataset.cat === filter) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
